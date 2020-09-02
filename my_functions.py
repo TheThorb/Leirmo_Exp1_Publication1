@@ -13,6 +13,7 @@ Contents:
 	exclude_values(col, val, some_list)			# Exclude rows containing a certain value from a list of dataframes
 	from_char_dict(keys, a_dict)				# Retrieve specified characteristics from the dictionary
 	get_column(col, some_list)					# Get specific columns from a list of dataframes
+	get_planes(some_dict)						# Get a dataframe with all planes and angle_z
 	
 """
 
