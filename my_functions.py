@@ -18,6 +18,7 @@ Contents:
 
 # Import libraries
 
+import math
 import pandas as pd
 
 
@@ -200,3 +201,44 @@ def get_column(col, some_list):
         result.append(element[col])
     return result
 
+
+def get_planes(some_dict):
+    """
+    Get a dataframe containing all planes in HX1 and HX2 with an extra column for angle_z
+
+    Arguments:
+        some_dict = a dictionary containing the required characteristics
+
+    Return:
+        a dataframe
+
+    """
+
+    for i in range(1,3):
+        for j in range(1,7):
+            temp = some_dict['Flatness_HX{}_Plane{}'.format(i, j)]
+
+            if i == 1:
+                flat_rot = (210 + (j*60)) % 360
+            else:
+                flat_rot = (240 + (j*60)) % 360
+
+            # Find the x and y components of the vector (unoriented)
+            x = math.cos(math.radians(flat_rot))
+            y = math.sin(math.radians(flat_rot))
+
+            z_angles = []
+
+            for angle in temp['angle']:
+                z_angles.append(math.degrees(math.acos(y * math.sin(math.radians(angle)))))
+
+
+            temp.insert(7, 'angle_z', z_angles, True)
+            temp.insert(0, 'char', 'Flatness_HX{}_Plane{}'.format(i, j), True)
+
+            if (i == 1 and j == 1):
+                df_planes = temp
+            else:
+                df_planes = pd.concat([df_planes, temp])
+
+    return df_planes
