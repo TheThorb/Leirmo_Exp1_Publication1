@@ -1,0 +1,12 @@
+number,filename,description
+00,00_Boxplot_Cyl_error_z-pos_-90.pdf,Boxplot of cylindricity error versus z-position for validation group. All xy-positions included.
+01,01_Boxplot_Cyl_error_z-pos_-90_y3.pdf,Boxplot of cylindricity error versus z-position for validation group. Only y=3 considered.
+02,02_Boxplot_Diameter_z-pos_-90_y3.pdf,Boxplot of absolute diametrical error vs. z-position for validation group. Only y=3 considered.
+03,03_Boxplot_Diameter_z-pos_-90_y1.pdf,Boxplot of absolute diametrical error vs. z-position for validation group. Only y=2 considered.
+10,10_Boxplot_Cyl_error_between_builds_-90.pdf,Boxplot of cylindricity error of the validation group divided in builds.
+20,20_Scatter_Cyl_error_convex.pdf,Scatter-plot of cylindricity error for convex cylinders by orientation.
+21,21_Scatter_Cyl_error_concave.pdf,Scatter-plot of cylindricity error for concave cylinders by orientation.
+22,22_Scatter_Flat_error_z-angle_ALL.pdf,Scatter-plot of flatness error for all planes by orientation in a single chart.
+23,23_Scatter_Flat_error_z-angle_single_planes.pdf,Scatter-plot of flatness error for all planes by orientation in separate charts.
+24,24_Scatter_Diameter_convex.pdf,Scatter-plot of the diametrical errors of convex cylinders by orientation.
+25,25_Scatter_Diameter_concave.pdf,Scatter-plot of the diametrical errors of concave cylinders by orientation.
