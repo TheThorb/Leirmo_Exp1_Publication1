@@ -26,6 +26,9 @@ import pandas as pd
 def load_results():
     """
     Create dataframe with selected columns from the resutlts-file.
+	
+	Return:
+		a single dataframe
     
     """
     
@@ -178,6 +181,7 @@ def df_from_dict(keys, a_dict):
         A list of dataframes
     
     """
+	
     result = []
     for key in keys:
         result.append(a_dict[key])
@@ -215,12 +219,15 @@ def get_planes(some_dict):
 
     """
     
+	# Initiate list of DataFrames to return
     df_planes = []
     
+	# Iterate through planes 1-6 (j) of HX1 and HX2 (i)
     for i in range(1,3):
         for j in range(1,7):
             temp = some_dict['Flatness_HX{}_Plane{}'.format(i, j)]
             
+			# Identify initial orientation based on i and j
             if i == 1:
                 flat_rot = (210 + (j*60)) % 360
             else:
@@ -230,16 +237,24 @@ def get_planes(some_dict):
             x = math.cos(math.radians(flat_rot))
             y = math.sin(math.radians(flat_rot))
             
+			# Initiate list of z-angles for easy insertion into DataFrame
             z_angles = []
             
+			# Calculate the offset from z-direction after part orientation
             for angle in temp['angle']:
                 z_angles.append(math.degrees(math.acos(y * math.sin(math.radians(angle)))))
             
+			# Insert the z_angles as a new column in the DataFrame
             temp.insert(7, 'angle_z', z_angles, True)
+			
+			# Insert a column with the characteristic name
             temp.insert(0, 'char', 'Flatness_HX{}_Plane{}'.format(i, j), True)
             
+			# Remove any duplicated columns
             temp = temp.loc[:,~temp.columns.duplicated()]
             
+			# Add the dataframe to the list
             df_planes.append(temp)
     
+	# Return the list of DataFrames
     return df_planes
