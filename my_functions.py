@@ -11,19 +11,24 @@ Contents:
 	save_dict(char_dict)						# Save the dictionary in separate files
 	get_single_values(col, val, some_list)		# Get rows containing a certain value from a list of dataframes
 	exclude_values(col, val, some_list)			# Exclude rows containing a certain value from a list of dataframes
-	from_char_dict(keys, a_dict)				# Retrieve specified characteristics from the dictionary
+	df_from_dict(keys, a_dict)					# Retrieve specified characteristics from the dictionary
 	get_column(col, some_list)					# Get specific columns from a list of dataframes
+	get_planes(some_dict)						# Get a dataframe with all planes and angle_z
 	
 """
 
 # Import libraries
 
+import math
 import pandas as pd
 
 
 def load_results():
     """
     Create dataframe with selected columns from the resutlts-file.
+	
+	Return:
+		a single dataframe
     
     """
     
@@ -176,6 +181,7 @@ def df_from_dict(keys, a_dict):
         A list of dataframes
     
     """
+	
     result = []
     for key in keys:
         result.append(a_dict[key])
@@ -200,3 +206,55 @@ def get_column(col, some_list):
         result.append(element[col])
     return result
 
+
+def get_planes(some_dict):
+    """
+    Get a list of dataframes containing HX1 and HX2 with angle_z included
+
+    Arguments:
+        some_dict = a dictionary containing the required characteristics
+
+    Return:
+        a list of dataframes
+
+    """
+    
+	# Initiate list of DataFrames to return
+    df_planes = []
+    
+	# Iterate through planes 1-6 (j) of HX1 and HX2 (i)
+    for i in range(1,3):
+        for j in range(1,7):
+            temp = some_dict['Flatness_HX{}_Plane{}'.format(i, j)]
+            
+			# Identify initial orientation based on i and j
+            if i == 1:
+                flat_rot = (210 + (j*60)) % 360
+            else:
+                flat_rot = (240 + (j*60)) % 360
+            
+            # Find the x and y components of the vector (unoriented)
+            x = math.cos(math.radians(flat_rot))
+            y = math.sin(math.radians(flat_rot))
+            
+			# Initiate list of z-angles for easy insertion into DataFrame
+            z_angles = []
+            
+			# Calculate the offset from z-direction after part orientation
+            for angle in temp['angle']:
+                z_angles.append(math.degrees(math.acos(y * math.sin(math.radians(angle)))))
+            
+			# Insert the z_angles as a new column in the DataFrame
+            temp.insert(7, 'angle_z', z_angles, True)
+			
+			# Insert a column with the characteristic name
+            temp.insert(0, 'char', 'Flatness_HX{}_Plane{}'.format(i, j), True)
+            
+			# Remove any duplicated columns
+            temp = temp.loc[:,~temp.columns.duplicated()]
+            
+			# Add the dataframe to the list
+            df_planes.append(temp)
+    
+	# Return the list of DataFrames
+    return df_planes
