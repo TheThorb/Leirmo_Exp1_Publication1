@@ -44,8 +44,8 @@ def load_results():
             "K4 Time/Date", \
             "K14 Part ident", \
             "K53 Order number"]
-	
-	
+    
+    
     # Read .csv file using only the defined columns and re-arranging them
     df = pd.read_csv(path, usecols=cols)[["Uuid", \
                                           "K53 Order number", \
@@ -55,8 +55,8 @@ def load_results():
                                           "K2101 Nominal value", \
                                           "K4 Time/Date", \
                                           "K2001 Characteristic number"]]
-	
-	
+    
+    
     # Re-name columns to shorter more descriptive names
     df.columns = ['uuid', 'part_name', 'rep', 'char_name', 'actual', 'nominal', 'time', 'char_number']
 
@@ -115,7 +115,7 @@ def make_dict(df, df_layout):
         .drop(['rep', 'actual', 'nominal', 'char_number'], axis = 1).join(df_layout)
     
     return char_dict
-	
+    
 
 def save_dict(char_dict):
     """
@@ -162,7 +162,7 @@ def exclude_values(col, val, some_list):
         a list of dataframes
 	
 	"""
-	
+    
     result = []
     for char in some_list:
         result.append(char[char[col] != val])
@@ -181,7 +181,7 @@ def df_from_dict(keys, a_dict):
         A list of dataframes
     
     """
-	
+    
     result = []
     for key in keys:
         result.append(a_dict[key])
@@ -246,7 +246,7 @@ def get_planes(some_dict):
             
 			# Insert the z_angles as a new column in the DataFrame
             temp.insert(7, 'angle_z', z_angles, True)
-			
+            
 			# Insert a column with the characteristic name
             temp.insert(0, 'char', 'Flatness_HX{}_Plane{}'.format(i, j), True)
             
