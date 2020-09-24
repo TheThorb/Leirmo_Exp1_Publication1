@@ -315,13 +315,13 @@ def my_t_test(dft, par='z_pos'):
     labels = sorted(dft[par].unique())
 
     # Create the lables for 2nd level indexes
-    lvl2 = ['T-stat', 'P-val'] * n
+    lvl2 = ['T-statistic', 'P-value'] * n
 
     # Zip lables of 1st and 2nd level to a list of tuples
     tuples = list(zip(*[sorted(labels * 2), lvl2]))
 
     # Initiate DataFrame object with multi-index
-    df_t_test = pd.DataFrame(index = pd.MultiIndex.from_tuples(tuples), columns = labels)
+    df_t_test = pd.DataFrame(index = pd.MultiIndex.from_tuples(tuples, names=['z-layer','type']), columns = labels)
 
     # Iterate through all combinations and populate the dataframe
     #   PS: Due to symmetry, only half the dataframe is traversed
@@ -336,10 +336,10 @@ def my_t_test(dft, par='z_pos'):
             t_stat, p_val = ttest_ind(df1['error'], df2['error'])
 
             # Populate the output dataframe with the newly discovered results
-            df_t_test[labels[i]][labels[j]]['T-stat'] = t_stat
-            df_t_test[labels[i]][labels[j]]['P-val'] = p_val
-            df_t_test[labels[j]][labels[i]]['T-stat'] = -t_stat
-            df_t_test[labels[j]][labels[i]]['P-val'] = p_val
+            df_t_test[labels[i]][labels[j]]['T-statistic'] = t_stat
+            df_t_test[labels[i]][labels[j]]['P-value'] = p_val
+            df_t_test[labels[j]][labels[i]]['T-statistic'] = -t_stat
+            df_t_test[labels[j]][labels[i]]['P-value'] = p_val
 
     # Return a multi-index dataframe with results
     return df_t_test
