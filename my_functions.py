@@ -14,8 +14,9 @@ Contents:
 	df_from_dict(keys, a_dict)					# Retrieve specified characteristics from the dictionary
 	get_column(col, some_list)					# Get specific columns from a list of dataframes
 	get_planes(some_dict)						# Get a dataframe with all planes and angle_z
-	t_test_z(dft)								# Perform a t-test for z-layers and return a DataFrame
-	
+	my_t_test(dft, par='z_pos')					# Perform a t-test for all combinations of a DF and return a MIDF
+	def get_p_vals(dft, par='z_pos')            # 
+
 """
 
 # Import libraries
@@ -253,48 +254,6 @@ def get_planes(some_dict):
 	# Return the list of DataFrames
     return df_planes
 
-def t_test_z(dft):
-    """
-    Perform a T-test for pairwise comparison of the distributions of layers in z-direction
-    
-    Argument:
-        A single DataFrame with an 'error' column
-    
-    Return:
-        A multi-index dataframe containing the T-statistics and P-values of all combinations
-    
-    """
-    
-    # Initiate DataFrame object with multi-index
-    df_t_test = pd.DataFrame(
-							{1: [None] * 10,
-							2: [None] * 10,
-							3: [None] * 10,
-							4: [None] * 10,
-							5: [None] * 10},
-    index = pd.MultiIndex.from_tuples(
-        [(1, 'T-stat'), (1, 'P-val'),\
-        (2, 'T-stat'), (2, 'P-val'),\
-        (3, 'T-stat'), (3, 'P-val'),\
-        (4, 'T-stat'), (4, 'P-val'),\
-        (5, 'T-stat'), (5, 'P-val')]))
-
-    # Iterate through all combinations and populate the dataframe
-    #   PS: Due to symmetry, only half the dataframe is traversed  
-    for i in range(1,6):
-        df1 = dft[dft['z_pos'] == i]
-        for j in range(i+1, 6):
-            df2 = dft[dft['z_pos'] == j]
-
-            # Perform the t-test and populate the dataframe
-            df_t_test[i][j]['T-stat'], df_t_test[i][j]['P-val'] = ttest_ind(df1['error'], df2['error'])
-            df_t_test[j][i]['T-stat'] = df_t_test[i][j]['T-stat']
-            df_t_test[j][i]['P-val'] = df_t_test[i][j]['P-val']
-
-
-    # Return a multi-index dataframe with results
-    return df_t_test
-
 def my_t_test(dft, par='z_pos'):
     """
     Perform a T-test for pairwise comparison of distributions
@@ -321,7 +280,7 @@ def my_t_test(dft, par='z_pos'):
     tuples = list(zip(*[sorted(labels * 2), lvl2]))
 
     # Initiate DataFrame object with multi-index
-    df_t_test = pd.DataFrame(index = pd.MultiIndex.from_tuples(tuples, names=['z-layer','type']), columns = labels)
+    df_t_test = pd.DataFrame(index = pd.MultiIndex.from_tuples(tuples, names=[par,'type']), columns = labels)
 
     # Iterate through all combinations and populate the dataframe
     #   PS: Due to symmetry, only half the dataframe is traversed
@@ -343,3 +302,44 @@ def my_t_test(dft, par='z_pos'):
 
     # Return a multi-index dataframe with results
     return df_t_test
+
+def get_p_vals(dft, par='z_pos'):
+    """
+    Perform a T-test for pairwise comparison of distributions and only get p-values
+    
+    Arguments:
+        A single DataFrame with an 'error' column
+        A string indicating which parameters to compare (default = 'z_pos')
+
+    Return:
+        A dataframe containing the P-values of all combinations
+    
+    """
+    
+    # Find the number of unique values of 'par'
+    n = len(dft[par].unique())
+
+    # Extract and sort a list of unique lables
+    labels = sorted(dft[par].unique())
+
+    # Initiate DataFrame object
+    df_p_vals = pd.DataFrame(index=labels, columns=labels)
+
+    # Iterate through all combinations and populate the dataframe
+    #   PS: Due to symmetry, only half the dataframe is traversed
+    for i in range(n):
+        # Get the rows of the dataframe corresponding to label i
+        df1 = dft[dft[par] == labels[i]]
+        for j in range(i+1, n):
+            # Get the rows of the dataframe corresponding to label j
+            df2 = dft[dft[par] == labels[j]]
+
+            # Perform the t-test
+            t_stat, p_val = ttest_ind(df1['error'], df2['error'])
+
+            # Populate the output dataframe with the newly discovered results
+            df_p_vals[labels[i]][labels[j]] = p_val
+            df_p_vals[labels[j]][labels[i]] = p_val
+
+    # Return a dataframe with the p-values
+    return df_p_vals
