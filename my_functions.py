@@ -6,16 +6,18 @@ Created by Torbjørn L. Leirmo
 
 Contents:
 	load_results()								# Load the 'results'-file
-	load_layout()								# Laod the 'layout'-file
-	make_dict(df, df_layout)					# Make a dictionary of characteristics
-	save_dict(char_dict)						# Save the dictionary in separate files
+	load_layout()								# Load the 'layout'-file
+    pickle_data()                               # Load results and layout and pickle to separate files
+	make_dict(df, df_layout)					# NB! No pickles! Make a dictionary of characteristics
+	make_char_dict()                            # Create dictionary of characteristics from pickled data
+    save_dict(char_dict)						# Save the dictionary in separate files
 	get_single_values(col, val, some_list)		# Get rows containing a certain value from a list of dataframes
 	exclude_values(col, val, some_list)			# Exclude rows containing a certain value from a list of dataframes
 	df_from_dict(keys, a_dict)					# Retrieve specified characteristics from the dictionary
 	get_column(col, some_list)					# Get specific columns from a list of dataframes
 	get_planes(some_dict)						# Get a dataframe with all planes and angle_z
 	my_t_test(dft, par='z_pos')					# Perform a t-test for all combinations of a DF and return a MIDF
-	def get_p_vals(dft, par='z_pos')            # 
+	get_p_vals(dft, par='z_pos')                # Perform a t-test for all combinations of a DF and return p-vals only
 
 """
 
@@ -34,9 +36,7 @@ def load_results():
 		a single dataframe
     
     """
-    
     path = "Data/Leirmo_Exp1_ALL.csv"
-    
     
     # Define by header name which columns to import 
     cols = ["Uuid", \
@@ -48,7 +48,6 @@ def load_results():
             "K14 Part ident", \
             "K53 Order number"]
     
-    
     # Read .csv file using only the defined columns and re-arranging them
     df = pd.read_csv(path, usecols=cols)[["Uuid", \
                                           "K53 Order number", \
@@ -59,18 +58,14 @@ def load_results():
                                           "K4 Time/Date", \
                                           "K2001 Characteristic number"]]
     
-    
     # Re-name columns to shorter more descriptive names
     df.columns = ['uuid', 'part_name', 'rep', 'char_name', 'actual', 'nominal', 'time', 'char_number']
-
 
     # Calculating the difference between the nominal and actual values and store them in column 'error'
     df.insert(6, 'error', df['actual'] - df['nominal'], True)
 
-
     # Correcting the datatype of the timestamp
     df['time'] = pd.to_datetime(df['time'])
-
 
     # uuid        = Unique ID for each measurement (36 characters for measurement run, and 36 for characteristic)
     # part_name   = Name of the specimen           (e.g. "Leirmo_Exp1_Build3_#11")
@@ -82,19 +77,34 @@ def load_results():
     # time        = Timestamp                      (Time of measurement. NB! Eight minutes late!)
     # char_number = Number of the characteristic   (1-106)
     
-    
     return df
+    
 
 def load_layout():
     """
 	Load the layout data and return a DataFrame using part_name as index.
 
 	"""
-
     path = "Data/leirmo_exp1_layout.csv"
     
     return pd.read_csv(path, sep = ';', index_col = 'part_name')
 
+
+def pickle_data():
+    """
+    Pickle the dataframe with all results for faster loading.
+
+    """
+    # Load the results and the layout data into separate dataframes
+    df_res = load_results()
+    df_layout = load_layout()
+
+    # Pickle the dataframes to specified locations
+    df_res.to_pickle("Data/prep_data.pkl")
+    df_layout.to_pickle("Data/layout_data.pkl")
+
+
+### NB! No pickles involved!
 def make_dict(df, df_layout):
     """
     Establish a dictionary of characteristics with layout data
@@ -102,20 +112,46 @@ def make_dict(df, df_layout):
     Dictionary values = dataframe with parts, errors and layout data
     
     """
-    
     char_dict = {}
-    
     
     # Identify all the unique parts and characteristics
     chars = df['char_name'].unique()
     
-    
-    # Construct separate csv-files of mean error values for each characteristic
+    ## Create an entry for every characteristic.
+    # Stores only mean measured error of repeated measurements
+    # Removes redundant columns
     for char in chars:
         char_dict[char] = df[df['char_name'] == char].groupby('part_name').mean()\
         .drop(['rep', 'actual', 'nominal', 'char_number'], axis = 1).join(df_layout)
     
     return char_dict
+
+
+def make_char_dict():
+    """
+    Create a dictionary of characteristics from pickled data.
+    The function loads data instead of taking arguments
+
+    """
+    # Initialize empty dictionary for characteristics
+    char_dict = {}
+
+    # Load pickled data
+    df = pd.read_pickle("Data/prep_data.pkl")
+    layout = pd.read_pickle("Data/layout_data.pkl")
+    
+    # Identify all the unique parts and characteristics
+    chars = df['char_name'].unique()
+    
+    ## Create an entry for every characteristic.
+    # Stores only mean measured error of repeated measurements
+    # Removes redundant columns
+    for char in chars:
+        char_dict[char] = df[df['char_name'] == char].groupby('part_name').mean()\
+        .drop(['rep', 'actual', 'nominal', 'char_number'], axis = 1).join(layout)
+    
+    return char_dict
+
     
 def save_dict(char_dict):
     """
@@ -124,9 +160,9 @@ def save_dict(char_dict):
     Required: A dictionary of characteristics
     
     """
-    
     for name, df in char_dict.items():
         df.to_csv('Data/Chars/{}_mean_excel.csv'.format(name), sep = ';')
+
 
 def get_single_values(col, val, some_list):
     """
@@ -141,11 +177,13 @@ def get_single_values(col, val, some_list):
         a list of dataframes
     
     """
-    
     result = []
+
     for char in some_list:
         result.append(char[char[col] == val])
+
     return result
+
 
 def exclude_values(col, val, some_list):
     """
@@ -160,11 +198,13 @@ def exclude_values(col, val, some_list):
         a list of dataframes
 	
 	"""
-    
     result = []
+
     for char in some_list:
         result.append(char[char[col] != val])
+
     return result
+
 
 def df_from_dict(keys, a_dict):
     """
@@ -178,11 +218,13 @@ def df_from_dict(keys, a_dict):
         A list of dataframes
     
     """
-    
     result = []
+
     for key in keys:
         result.append(a_dict[key])
+
     return result
+
 
 def get_column(col, some_list):
     """
@@ -196,11 +238,13 @@ def get_column(col, some_list):
         a list of dataframes (or series if only one column)
     
     """
-    
     result = []
+
     for element in some_list:
         result.append(element[col])
+
     return result
+
 
 def get_planes(some_dict):
     """
@@ -213,7 +257,6 @@ def get_planes(some_dict):
         a list of dataframes
 
     """
-    
 	# Initiate list of DataFrames to return
     df_planes = []
     
@@ -254,6 +297,7 @@ def get_planes(some_dict):
 	# Return the list of DataFrames
     return df_planes
 
+
 def my_t_test(dft, par='z_pos'):
     """
     Perform a T-test for pairwise comparison of distributions
@@ -266,7 +310,6 @@ def my_t_test(dft, par='z_pos'):
         A multi-index dataframe containing the T-statistics and P-values of all combinations
     
     """
-    
     # Find the number of unique values of 'par'
     n = len(dft[par].unique())
 
@@ -303,6 +346,7 @@ def my_t_test(dft, par='z_pos'):
     # Return a multi-index dataframe with results
     return df_t_test
 
+
 def get_p_vals(dft, par='z_pos'):
     """
     Perform a T-test for pairwise comparison of distributions and only get p-values
@@ -315,7 +359,6 @@ def get_p_vals(dft, par='z_pos'):
         A dataframe containing the P-values of all combinations
     
     """
-    
     # Find the number of unique values of 'par'
     n = len(dft[par].unique())
 
