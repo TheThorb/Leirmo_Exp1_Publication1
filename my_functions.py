@@ -27,10 +27,11 @@ import math
 import pandas as pd
 from scipy.stats import ttest_ind
 
+##############################################################################
 
 def load_results():
     """
-    Create dataframe with selected columns from the resutlts-file.
+    Create dataframe with selected columns from the results-file.
 	
 	Return:
 		a single dataframe
@@ -366,7 +367,7 @@ def get_p_vals(dft, par='z_pos'):
     labels = sorted(dft[par].unique())
 
     # Initiate DataFrame object
-    df_p_vals = pd.DataFrame(index=labels, columns=labels)
+    df = pd.DataFrame(index=labels, columns=labels)
 
     # Iterate through all combinations and populate the dataframe
     #   PS: Due to symmetry, only half the dataframe is traversed
@@ -381,8 +382,8 @@ def get_p_vals(dft, par='z_pos'):
             t_stat, p_val = ttest_ind(df1['error'], df2['error'])
 
             # Populate the output dataframe with the newly discovered results
-            df_p_vals[labels[i]][labels[j]] = p_val
-            df_p_vals[labels[j]][labels[i]] = p_val
+            df[labels[i]][labels[j]] = p_val
+            df[labels[j]][labels[i]] = p_val
 
     # Return a dataframe with the p-values
-    return df_p_vals
+    return df
