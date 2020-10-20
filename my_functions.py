@@ -18,6 +18,9 @@ Contents:
 	get_planes(some_dict)						# Get a dataframe with all planes and angle_z
 	my_t_test(dft, par='z_pos')					# Perform a t-test for all combinations of a DF and return a MIDF
 	get_p_vals(dft, par='z_pos')                # Perform a t-test for all combinations of a DF and return p-vals only
+    calc_laser_angle(x, y, feature_vector=...)  # Calculate laser angle
+    rotate_vector(vector, a=0, b=0, c=0)        # Rotate a vector
+    add_laser_angle(df, feature_vector=...)     # Add column 'laser_angle' to dataframe
 
 """
 
@@ -25,6 +28,7 @@ Contents:
 
 import math
 import pandas as pd
+import numpy as np
 from scipy.stats import ttest_ind
 
 ##############################################################################
@@ -87,6 +91,20 @@ def load_layout():
 
 	"""
     path = "Data/leirmo_exp1_layout.csv"
+
+    # part_name   = Name of the specimen           (e.g. "Leirmo_Exp1_Build3_#11")
+    # build       = Build number                   (1-3)
+    # part_index  = Specimen number in the build   (1-45)
+    # x_pos       = x-position (simple)            (1-3)
+    # y_pos       = y-position (simple)            (1-3)
+    # z_pos       = z-position (simple)            (1-3)
+    # angle       = Part rotation about x-axis     (0-180, -90 for anchor specimen [degrees])
+    # center_x    = x-position (actual)            (Center position along x-axis* as given in Magics [mm])
+    # center_y    = y-position (actual)            (Center position along y-axis* as given in Magics [mm])
+    # center_z    = z-position (actual)            (Center position along z-axis** as given in Magics [mm])
+    
+    # *  x- and y-positions are evenly distributed at 70, 170 and 270 [mm]
+    # ** z-positions are adjusted for layer height at 50.88, 150.6, 250.32, 350.04 and 449.76 [mm]
     
     return pd.read_csv(path, sep = ';', index_col = 'part_name')
 
@@ -386,4 +404,103 @@ def get_p_vals(dft, par='z_pos'):
             df[labels[j]][labels[i]] = p_val
 
     # Return a dataframe with the p-values
+    return df
+
+
+def calc_laser_angle(x, y, feature_vector=np.array([0, 0, 1])):
+    """
+    Calculate laser angle.
+
+    Arguments:
+        x = x-position of the feature/part
+        y = y-position of the feature/part
+        feature_vector = normal vector of the feature (default = [0, 0, 1])
+
+    Return:
+        The laser angle in degrees
+
+    """
+    # Initialize positions
+    part_pos = np.array([x, y, 0])
+    laser_pos = np.array([170, 170, 600])
+
+    # Calculate the vector from laser to part position
+    laser_vector = np.subtract(part_pos, laser_pos)
+
+    # Calculate dot-products (assumes unit feature normal vector)
+    over = np.dot(feature_vector, laser_vector)
+    under = np.sqrt(laser_vector.dot(laser_vector))
+
+    # Return angle in degrees
+    return math.degrees(np.arccos(over/under))
+
+
+def rotate_vector(vector, a=0, b=0, c=0):
+    """
+    Rotate a vector about x, y and z axis.
+
+    Arguments:
+        vector = the vector to rotate
+        a = rotation about x-axis
+        b = rotation about y-axis
+        c = rotation about z-axis
+
+    Return:
+        a rotated vector
+    """
+
+    if a:
+        a = math.radians(a)
+        vector = np.dot(np.array([[1,0,0],[0,np.cos(a),-np.sin(a)],[0, np.sin(a), np.cos(a)]]), vector)
+    if b:
+        b= math.radians(b)
+        vector = np.dot(np.array([[np.cos(b),0,np.sin(b)],[0,1,0],[-np.sin(b), 0, np.cos(b)]]), vector)
+    if c:
+        c= math.radians(c)
+        vector = np.dot(np.array([[np.cos(c), -np.sin(c),0],[np.sin(c), np.cos(c),0],[0,0,1]]), vector)
+
+    return vector
+
+
+def add_laser_angle(df, feature_vector=np.array([0, 0, 1])):
+    """
+    Calculate the laser angle and insert as a new column in the dataframe.
+
+    Arguments:
+        A single dataframe containing x- and y-positions
+
+    Return:
+        A copy of the original dataframe with a column for laser angle
+
+    """
+    # Get a list of column names
+    headers = list(df.columns)
+
+    # Initiate a list (to be the new column)
+    new_col = []
+
+    # Iterate over the rows of the dataframe
+    for i in range(len(df)):
+        # Update feature vector with part orientation
+        feature_vector = rotate_vector(np.array(feature_vector), df.iloc[i]['angle'])
+
+        # Find x-coordinate depending on availability
+        if 'center_x' in headers:
+            x_coor = df.iloc[i]['center_x']
+        elif 'x_pos' in headers:
+            x_coor = (df.iloc[i]['x_pos'] * 100) -30
+
+        # Find y-coordinate depending on availability
+        if 'center_y' in headers:
+            y_coor = df.iloc[i]['center_y']
+        elif 'y_pos' in headers:
+            y_coor = (df.iloc[i]['y_pos'] * 100) -30
+
+        # Calculate the laser angle and append to list
+        new_col.append(calc_laser_angle(x_coor, y_coor, feature_vector))
+
+    # Add the new column to the dataframe
+    df['laser_angle'] = new_col
+
+    # Return the dataframe
     return df
