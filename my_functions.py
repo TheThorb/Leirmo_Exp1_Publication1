@@ -424,8 +424,8 @@ def calc_laser_angle(x, y, feature_vector=np.array([0, 0, 1])):
     part_pos = np.array([x, y, 0])
     laser_pos = np.array([170, 170, 600])
 
-    # Calculate the vector from laser to part position
-    laser_vector = np.subtract(part_pos, laser_pos)
+    # Calculate the vector from part position to the laser
+    laser_vector = np.subtract(laser_pos, part_pos)
 
     # Calculate dot-products (assumes unit feature normal vector)
     over = np.dot(feature_vector, laser_vector)
@@ -453,10 +453,10 @@ def rotate_vector(vector, a=0, b=0, c=0):
         a = math.radians(a)
         vector = np.dot(np.array([[1,0,0],[0,np.cos(a),-np.sin(a)],[0, np.sin(a), np.cos(a)]]), vector)
     if b:
-        b= math.radians(b)
+        b = math.radians(b)
         vector = np.dot(np.array([[np.cos(b),0,np.sin(b)],[0,1,0],[-np.sin(b), 0, np.cos(b)]]), vector)
     if c:
-        c= math.radians(c)
+        c = math.radians(c)
         vector = np.dot(np.array([[np.cos(c), -np.sin(c),0],[np.sin(c), np.cos(c),0],[0,0,1]]), vector)
 
     return vector
@@ -482,7 +482,7 @@ def add_laser_angle(df, feature_vector=np.array([0, 0, 1])):
     # Iterate over the rows of the dataframe
     for i in range(len(df)):
         # Update feature vector with part orientation
-        feature_vector = rotate_vector(np.array(feature_vector), df.iloc[i]['angle'])
+        new_feature_vector = rotate_vector(vector=np.array(feature_vector), a=df.iloc[i]['angle'])
 
         # Find x-coordinate depending on availability
         if 'center_x' in headers:
@@ -497,7 +497,7 @@ def add_laser_angle(df, feature_vector=np.array([0, 0, 1])):
             y_coor = (df.iloc[i]['y_pos'] * 100) -30
 
         # Calculate the laser angle and append to list
-        new_col.append(calc_laser_angle(x_coor, y_coor, feature_vector))
+        new_col.append(calc_laser_angle(x_coor, y_coor, new_feature_vector))
 
     # Add the new column to the dataframe
     df['laser_angle'] = new_col
