@@ -407,6 +407,25 @@ def get_p_vals(dft, par='z_pos'):
     return df
 
 
+def calc_angle(vector_a, vector_b):
+    """
+    Calculate the angle between two vectors
+
+    Arguments:
+        vector_a = the first vector as a nympy array
+        vector_2 = the second vector as a nympy array
+    Return:
+        The angle in degrees
+
+    """
+    # Calculate dot-products
+    over = np.dot(vector_a, vector_b)
+    under = np.sqrt(vector_a.dot(vector_a)) * np.sqrt(vector_b.dot(vector_b))
+
+    # Return angle in degrees
+    return math.degrees(np.arccos(over/under))
+
+
 def calc_laser_angle(x, y, feature_vector=np.array([0, 0, 1])):
     """
     Calculate laser angle.
@@ -427,12 +446,8 @@ def calc_laser_angle(x, y, feature_vector=np.array([0, 0, 1])):
     # Calculate the vector from part position to the laser
     laser_vector = np.subtract(laser_pos, part_pos)
 
-    # Calculate dot-products (assumes unit feature normal vector)
-    over = np.dot(feature_vector, laser_vector)
-    under = np.sqrt(laser_vector.dot(laser_vector))
-
     # Return angle in degrees
-    return math.degrees(np.arccos(over/under))
+    return calc_angle(feature_vector, laser_vector)
 
 
 def rotate_vector(vector, a=0, b=0, c=0):
@@ -441,9 +456,9 @@ def rotate_vector(vector, a=0, b=0, c=0):
 
     Arguments:
         vector = the vector to rotate
-        a = rotation about x-axis
-        b = rotation about y-axis
-        c = rotation about z-axis
+        a = rotation about x-axis in degrees
+        b = rotation about y-axis in degrees
+        c = rotation about z-axis in degrees
 
     Return:
         a rotated vector
