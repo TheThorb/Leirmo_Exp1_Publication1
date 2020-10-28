@@ -418,6 +418,10 @@ def calc_angle(vector_a, vector_b):
         The angle in degrees
 
     """
+    # Cast to numpy arrays
+    vector_a = np.array(vector_a)
+    vector_b = np.array(vector_b)
+
     # Calculate dot-products
     over = np.dot(vector_a, vector_b)
     under = np.sqrt(vector_a.dot(vector_a)) * np.sqrt(vector_b.dot(vector_b))
