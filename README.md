@@ -7,10 +7,10 @@ The experiment is part of the PhD-project og Torbjørn Langedahl Leirmo and was 
 The repository contain folders of data, figures and plots, as  well as files of source code and notebooks for data analysis.
 The notebooks are numbered according to the logical progression of analyzing the data, namely:
 
-01: Analyze repeated measurements\n
-02: Comparison of builds\n
-03: Analysis of variation along the z-axis of the build chamber\n
-04: Analysis of variation in the xy-plane
+1. Analyze repeated measurements
+2. Comparison of builds
+3. Analysis of variation along the z-axis of the build chamber
+4. Analysis of variation in the xy-plane
 
 The remaining notebooks are either work in progress or unrelated analyses.
 
