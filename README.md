@@ -8,8 +8,11 @@ The repository contain folders of data, figures and plots, as  well as files of 
 The notebooks are numbered according to the logical progression of analyzing the data, namely:
 
 01: Analyze repeated measurements
+
 02: Comparison of builds
+
 03: Analysis of variation along the z-axis of the build chamber
+
 04: Analysis of variation in the xy-plane
 
 The remaining notebooks are either work in progress or unrelated analyses.
