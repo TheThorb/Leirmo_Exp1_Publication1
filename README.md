@@ -3,6 +3,17 @@ This repository contains data, code and figures for the experiment "Leirmo_Exp1"
 The experiment is part of the PhD-project og Torbjørn Langedahl Leirmo and was conducted in the spring/summer of 2020.
 
 
+## Dependencies
+The code is developed in a Windows 10 operating system using Python 3.
+The following list contain all dependencies and the appropriate versions.
+
+ - Matplotlib v3.3.3
+ - Numpy v1.19.5
+ - Pandas v1.2.0
+ - Scipy v1.6.0
+ - Seaborn v0.11.1
+
+
 ## Contents
 The repository contain folders of data, figures and plots, as  well as files of source code and notebooks for data analysis.
 The notebooks are numbered according to the logical progression of analyzing the data, namely:
