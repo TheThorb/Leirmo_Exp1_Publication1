@@ -35,3 +35,14 @@ There are two Python-files of source code. These files contain utility functions
  - "specimen_with_labels.png": Figure displaying the test artifact where the features are labelled
  
 "plots": Plots created from various notebooks. Separate contents file is found in the folder.
+
+
+## Dependencies
+The code is developed in a Windows 10 operating system using Python 3.
+The following list contain all dependencies and the appropriate versions.
+
+ - Matplotlib v3.2.0
+ - Pandas v1.1.2
+ - Numpy v1.19.1
+ - Scipy v1.5.2
+ - Seaborn v0.11.1
