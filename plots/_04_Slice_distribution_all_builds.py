@@ -8,6 +8,7 @@ Line plot showing the slice distribution of all builds in a single figure
 ## Import packages
 import os
 import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib import transforms
 from matplotlib.lines import Line2D
@@ -30,6 +31,9 @@ df.insert(3, "Build 3", df_b3['Total slice surface (mmý)'])
 # (this will be reverted later during transform)
 df['Height (mm)'] = -df['Height (mm)']
 
+# Convert to cm²
+for i in [1, 2, 3]: df['Build {}'.format(i)] = df['Build {}'.format(i)] / 100
+
 # Set the height as index
 df.set_index('Height (mm)', inplace=True)
 
@@ -41,16 +45,19 @@ medium = 18
 small = 14
 x_small = 12
 
-# Define colors
-colors = ['tab:blue', 'tab:orange', 'tab:green']
-
 
 ## Plot data using matplotlib
+# Seaborn theme
+sns.set_theme(context='paper', style='whitegrid', font_scale=1.2)
+
+# Define colors
+colors = sns.color_palette('colorblind')
+
 # Define the figure
 fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(10, 10))
 
 # Define transformation parameters for plotting data
-base = plt.gca().transData
+base = ax.transData
 rot = transforms.Affine2D().rotate_deg(-90)
 
 # Create the lineplot
@@ -72,11 +79,11 @@ ax.legend(title="Build", loc='upper right', title_fontsize=medium, fontsize=smal
 
 ## Configure axes
 # Set labels for axes
-ax.set_xlabel("Slice area\n[mm²]", fontsize=medium, labelpad=10)
+ax.set_xlabel("Slice area\n[cm²]", fontsize=medium, labelpad=10)
 ax.set_ylabel("Height\n[mm]", fontsize=medium, labelpad=40, rotation='horizontal')
 
 # Set label size
-ax.tick_params(labelsize=small)
+ax.tick_params(labelsize=small, bottom=True)
 
 # Define the bounds of the axes
 ax.set_xbound(lower=0)
@@ -86,8 +93,8 @@ ax.set_ybound(lower=0, upper=500)
 ax.set_yticks(list(range(0, 501, 50)))
 
 # Set grid lines for the y-axis
-ax.grid(axis='y')
+ax.grid(axis='x')
 
 
 # Save figure
-plt.savefig('04.0_Slice_distribution_all_builds.jpg', dpi=300, bbox_inches='tight')
+plt.savefig('04.1_Slice_distribution_all_builds.jpg', dpi=300, bbox_inches='tight')
