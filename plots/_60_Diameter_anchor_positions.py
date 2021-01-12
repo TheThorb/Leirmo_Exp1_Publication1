@@ -59,9 +59,6 @@ medium = 18
 small = 14
 x_small = 12
 
-# Define font
-pfont = {'fontname':'Palatino Linotype'}
-
 
 ## Plot data using seaborn module
 # Seaborn theme
@@ -97,4 +94,4 @@ ax.tick_params(labelsize=small)
 
 
 # Save figure
-plt.savefig('60.2_Diameter_anchor_positions.jpg', dpi=300, bbox_inches='tight')
+plt.savefig('60.3_Diameter_anchor_positions.jpg', dpi=300, bbox_inches='tight')
