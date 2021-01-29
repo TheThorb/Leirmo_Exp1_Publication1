@@ -23,12 +23,10 @@ The notebooks are numbered according to the logical progression of analyzing the
 3. Analysis of variation along the z-axis of the build chamber
 4. Analysis of variation in the xy-plane
 
-The remaining notebooks are either work in progress or unrelated analyses.
-
 There are two Python-files of source code. These files contain utility functions used in one or more of the notebooks.
 
-"my_functions.py": Primarily functions for reading and saving data, as well as functions for handlig lists of dataframes.
-"my_plot.py": Functions for plotting data
+* "my_functions.py": Primarily functions for reading and saving data, as well as functions for handlig lists of dataframes.
+* "my_plot.py": Functions for plotting data
 
 
 ### Folders
