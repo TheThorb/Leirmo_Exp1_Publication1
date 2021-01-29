@@ -1,6 +1,8 @@
-# Leirmo_Exp1
-This repository contains data, code and figures for the experiment "Leirmo_Exp1".
-The experiment is part of the PhD-project og Torbjørn Langedahl Leirmo and was conducted in the spring/summer of 2020.
+# Leirmo_Exp1_Publication1
+This repository contains data, code and figures for the first publication of results from the first experiment of Torbjørn Langedahl Leirmo.
+The repository is established in relation to a scientific publication where the results are disseminated.
+Links will be provided shortly after publication.
+Any inquiries may be directed to torbjorn.leirmo@ntnu.no.
 
 
 ## Dependencies
@@ -43,4 +45,4 @@ There are two Python-files of source code. These files contain utility functions
  - "layout_positions.png": A visualization of the different positions in the build chamber (x, y and z- direction)
  - "specimen_with_labels.png": Figure displaying the test artifact where the features are labelled
  
-"plots": Plots created from various notebooks. Separate contents file is found in the folder.
+"plots": Plots and the code for their creation. Separate contents file is found in the folder.
