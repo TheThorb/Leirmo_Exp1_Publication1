@@ -50,7 +50,8 @@ There are two Python-files of source code. These files contain utility functions
  - "T-test_Angle_Cylindricity.csv": Results from T-test of angle versus cylindricity
  - "T-test_Z-dir_Cylinders.csv": Results from T-test of Z-direction versus cylindricity
  - "Slice_distribution_<>.csv": Slice distributions exported from Materialise Magics software
- - "Room_data_Build_<>.csv": Data on temperature and humidity collected from sensors during the builds
+ - "Room_data_Build_<>.csv": Data on temperature and humidity collected from sensors in the room during the builds
+ - "Weather_data.csv": Data on weather conditions collected from  https://www.yr.no/en
  
 "figs": Figures used as illustrations in notebooks.
  - "layout_positions.png": A visualization of the different positions in the build chamber (x-, y-, and z-direction)
