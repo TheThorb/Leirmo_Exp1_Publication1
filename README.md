@@ -49,6 +49,8 @@ There are two Python-files of source code. These files contain utility functions
  - "prep_data.pkl": Pickled version of all data from the coordinate measuring machine
  - "T-test_Angle_Cylindricity.csv": Results from T-test of angle versus cylindricity
  - "T-test_Z-dir_Cylinders.csv": Results from T-test of Z-direction versus cylindricity
+ - "Slice_distribution_<>.csv": Slice distributions exported from Materialise Magics software
+ - "Room_data_Build_<>.csv": Data on temperature and humidity collected from sensors during the builds
  
 "figs": Figures used as illustrations in notebooks.
  - "layout_positions.png": A visualization of the different positions in the build chamber (x-, y-, and z-direction)
