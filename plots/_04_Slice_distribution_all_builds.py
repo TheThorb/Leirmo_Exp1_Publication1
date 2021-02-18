@@ -27,10 +27,6 @@ df = df_b1.rename(columns={"Total slice surface (mmý)": "Build 1"})
 df.insert(2, "Build 2", df_b2['Total slice surface (mmý)'])
 df.insert(3, "Build 3", df_b3['Total slice surface (mmý)'])
 
-# Convert height to negative numbers
-# (this will be reverted later during transform)
-df['Height (mm)'] = -df['Height (mm)']
-
 # Convert to cm²
 for i in [1, 2, 3]: df['Build {}'.format(i)] = df['Build {}'.format(i)] / 100
 
@@ -54,15 +50,11 @@ sns.set_theme(context='paper', style='whitegrid', font_scale=1.2)
 colors = sns.color_palette('colorblind')
 
 # Define the figure
-fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(10, 10))
-
-# Define transformation parameters for plotting data
-base = ax.transData
-rot = transforms.Affine2D().rotate_deg(-90)
+fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(15, 8))
 
 # Create the lineplot
 for i in range(len(df.columns)):
-    plt.plot(df.iloc[:,i], color=colors[i], transform=rot + base)
+    plt.plot(df.iloc[:,i], color=colors[i])
 
 
 ## Configure legend
@@ -79,22 +71,23 @@ ax.legend(title="Build", loc='upper right', title_fontsize=medium, fontsize=smal
 
 ## Configure axes
 # Set labels for axes
-ax.set_xlabel("Slice area\n[cm²]", fontsize=medium, labelpad=10)
-ax.set_ylabel("Height\n[mm]", fontsize=medium, labelpad=40, rotation='horizontal')
+ax.set_xlabel("Height\n[mm]", fontsize=medium, labelpad=10, rotation='horizontal')
+ax.set_ylabel("Slice area\n[cm²]", fontsize=medium, labelpad=10)
 
 # Set label size
 ax.tick_params(labelsize=small, bottom=True)
 
 # Define the bounds of the axes
-ax.set_xbound(lower=0)
-ax.set_ybound(lower=0, upper=500)
+ax.set_xbound(lower=0, upper=500)
+ax.set_ybound(lower=0)
 
 # Set ticks for every 50 mm height
-ax.set_yticks(list(range(0, 501, 50)))
+ax.set_xticks(list(range(0, 501, 50)))
 
 # Set grid lines for the y-axis
-ax.grid(axis='x')
+ax.grid(b=True, axis='both')
 
 
 # Save figure
-plt.savefig('04.1_Slice_distribution_all_builds.jpg', dpi=300, bbox_inches='tight')
+plt.savefig('04.2_Slice_distribution_all_builds.jpeg', dpi=600, bbox_inches='tight')
+plt.savefig('04.2_Slice_distribution_all_builds.pdf', bbox_inches='tight')

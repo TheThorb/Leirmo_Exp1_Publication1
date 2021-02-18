@@ -68,12 +68,6 @@ sns.boxplot(ax=axs[0], data=df, y='error', x='z_pos', palette='colorblind')
 # Set label for the x-axis
 axs[0].set_xlabel("Z-position", fontsize=medium)
 
-# Add letter below plot
-plt.text(x=0.5, y=-0.2, s="(a)", fontsize=large, weight='bold', **pfont,
-         horizontalalignment='center',
-         verticalalignment='center',
-         transform=axs[0].transAxes)
-
 
 ## PLOT 2
 # Kernel density estimation for second frame
@@ -81,12 +75,6 @@ sns.kdeplot(ax=axs[1], data=df, y='error', hue='z_pos', fill=True, alpha=.3, pal
 
 # Set the label for the x-axis
 axs[1].set_xlabel("Density", fontsize=medium)
-
-# Add letter below plot
-plt.text(x=0.5, y=-0.2, s="(b)", fontsize=large, weight='bold', **pfont,
-         horizontalalignment='center',
-         verticalalignment='center',
-         transform=axs[1].transAxes)
 
 # Set legend title
 leg = axs[1].get_legend()
@@ -106,4 +94,5 @@ for ax in axs:
 
 
 # Save figure
-plt.savefig("51.0_Variation_between_z-positions_for_vertical_planes.jpg", dpi=300, bbox_inches='tight')
+plt.savefig("51.1_Variation_between_z-positions_for_vertical_planes.jpeg", dpi=600, bbox_inches='tight')
+plt.savefig("51.1_Variation_between_z-positions_for_vertical_planes.pdf",  bbox_inches='tight')

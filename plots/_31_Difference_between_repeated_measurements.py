@@ -195,4 +195,5 @@ for ax in axs:
     ax.tick_params(labelsize=x_small)
 
 # Save figure
-plt.savefig("31.0_Difference_between_repeated_measurements.jpg", dpi=300, bbox_inches='tight')
+plt.savefig("31.1_Difference_between_repeated_measurements.jpeg", dpi=600, bbox_inches='tight')
+plt.savefig("31.1_Difference_between_repeated_measurements.pdf", bbox_inches='tight')

@@ -146,12 +146,6 @@ axs[0].set_yticklabels(["0.00", "3\u03C3", "0.05", "5\u03C3\n", "0.10", "0.15", 
 # Place legend in upper left corner without title
 axs[0].legend(loc='upper left', title=None, fontsize=medium, fancybox=True, markerscale=2)
 
-# Add letter below plot
-plt.text(x=0.5, y=-0.2, s="(a)", fontsize=large, weight='bold', **pfont,
-            horizontalalignment='center',
-            verticalalignment='center',
-            transform=axs[0].transAxes)
-
 
 ## Filter outliers above five standard deviations
 data = data[data['diff'] < std * 5]
@@ -181,11 +175,6 @@ axs[1].set_yticks([0, 0.01, 0.02, 0.03, std*3, 0.04, 0.05, 0.06])
 # Set tick labels for y-axis
 axs[1].set_yticklabels(["0.00", "0.01", "0.02", "0.03", "3\u03C3", "0.04", "0.05", "0.06"], fontsize=medium)
 
-# Add letter below plot
-plt.text(x=0.5, y=-0.2, s="(b)", fontsize=large, weight='bold', **pfont,
-            horizontalalignment='center',
-            verticalalignment='center',
-            transform=axs[1].transAxes)
 
 for ax in axs:
     # Set label for y-axis
@@ -201,4 +190,5 @@ for ax in axs:
     ax.xaxis.grid(False)
 
 # Save figure
-plt.savefig("30.4_Difference_between_repeated_measurements.jpg", dpi=300, bbox_inches='tight')
+plt.savefig("30.5_Difference_between_repeated_measurements.jpeg", dpi=600, bbox_inches='tight')
+plt.savefig("30.5_Difference_between_repeated_measurements.pdf", bbox_inches='tight')

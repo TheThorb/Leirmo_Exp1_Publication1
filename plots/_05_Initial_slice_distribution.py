@@ -25,11 +25,7 @@ df_sphere = pd.read_csv(os.path.join('..', 'data', 'Slice_distribution_spheres.c
 dfs = [df_main, df_sphere]
 
 # For both dataframes:
-for df in dfs:
-    # Convert height to negative numbers
-    # (this will be reverted later during transform)
-    df['Height (mm)'] = -df['Height (mm)']
-    
+for df in dfs:   
     # Convert to cm²
     df['Total slice surface (mm²)'] = df['Total slice surface (mm²)'] / 100
         
@@ -56,46 +52,36 @@ sns.set_theme(context='paper', style='whitegrid', font_scale=1.2)
 colors = sns.color_palette('colorblind')
 
 # Define the figure
-fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(15, 7))
+fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(15, 8))
 
 # Configure layout spacing
 fig.tight_layout(pad=6.0)
 
 
-for i in range(len(axs)):
-    # Define transformation parameters for plotting data
-    base = axs[i].transData
-    rot = transforms.Affine2D().rotate_deg(-90)
-    
+for i in range(len(axs)):   
     # Plot the slice distributions in spearate panels of the figure
-    axs[i].plot(dfs[i], linewidth=2, transform=rot + base)
+    axs[i].plot(dfs[i], linewidth=2)
 
     # Set label for y-axis
-    axs[i].set_xlabel('Slice area [cm²]', fontsize=medium)
+    axs[i].set_ylabel('Slice area [cm²]', fontsize=medium)
     
     # Set label for x-axis
-    axs[i].set_ylabel('Height [mm]', fontsize=medium)
+    axs[i].set_xlabel('Height [mm]', fontsize=medium)
     
     # Set the label size for both axes
     axs[i].tick_params(labelsize=small, bottom=True)
     
     # Define the bounds of the axes
-    axs[i].set_xbound(lower=0)
-    axs[i].set_ybound(lower=0, upper=500)
+    axs[i].set_ybound(lower=0)
+    axs[i].set_xbound(lower=0, upper=500)
 
     # Set ticks for every 50 mm height
-    axs[i].set_yticks(list(range(0, 501, 50)))
+    axs[i].set_xticks(list(range(0, 501, 50)))
 
     # Set grid lines for the y-axis
-    axs[i].grid(axis='x')
-    
-    # Add letter below plot    
-    plt.text(x=0.5, y=-0.2, s="({})".format("b" if i else "a"), **pfont,
-         fontsize=large, weight='bold',
-         horizontalalignment='center',
-         verticalalignment='center',
-         transform=axs[i].transAxes)
+    axs[i].grid(b=True, axis='both')
     
     
 # Save figure
-plt.savefig('05.1_Initial_slice_distribution.jpg', dpi=500, bbox_inches='tight')
+plt.savefig('05.2_Initial_slice_distribution.jpeg', dpi=600, bbox_inches='tight')
+plt.savefig('05.2_Initial_slice_distribution.pdf', bbox_inches='tight')

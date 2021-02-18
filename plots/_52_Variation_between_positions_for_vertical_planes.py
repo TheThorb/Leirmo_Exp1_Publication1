@@ -68,12 +68,6 @@ sns.boxplot(ax=axs[0], data=df, y='error', x='x_pos', hue='z_pos', palette='colo
 # Set label for the x-axis
 axs[0].set_xlabel("X-position", fontsize=medium)
 
-# Add letter below plot
-plt.text(x=0.5, y=-0.2, s="(a)", fontsize=large, weight='bold', **pfont,
-         horizontalalignment='center',
-         verticalalignment='center',
-         transform=axs[0].transAxes)
-
 
 ## PLOT 2
 # Boxplot for the second frame
@@ -81,12 +75,6 @@ sns.boxplot(ax=axs[1], data=df, y='error', x='y_pos', hue='z_pos', palette='colo
 
 # Set the label for the x-axis
 axs[1].set_xlabel("Y-position", fontsize=medium)
-
-# Add letter below plot
-plt.text(x=0.5, y=-0.2, s="(b)", fontsize=large, weight='bold', **pfont,
-         horizontalalignment='center',
-         verticalalignment='center',
-         transform=axs[1].transAxes)
 
 
 # Define parameters common to both panels
@@ -102,4 +90,5 @@ for ax in axs:
 
 
 # Save figure
-plt.savefig("52.0_Variation_between_positions_for_vertical_planes.jpg", dpi=300, bbox_inches='tight')
+plt.savefig("52.1_Variation_between_positions_for_vertical_planes.jpeg", dpi=600, bbox_inches='tight')
+plt.savefig("52.1_Variation_between_positions_for_vertical_planes.pdf", bbox_inches='tight')

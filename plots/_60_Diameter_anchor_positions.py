@@ -94,4 +94,5 @@ ax.tick_params(labelsize=small)
 
 
 # Save figure
-plt.savefig('60.3_Diameter_anchor_positions.jpg', dpi=300, bbox_inches='tight')
+plt.savefig('60.4_Diameter_anchor_positions.jpeg', dpi=600, bbox_inches='tight')
+plt.savefig('60.4_Diameter_anchor_positions.pdf', bbox_inches='tight')
