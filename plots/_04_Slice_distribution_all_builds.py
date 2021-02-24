@@ -71,8 +71,8 @@ ax.legend(title="Build", loc='upper right', title_fontsize=medium, fontsize=smal
 
 ## Configure axes
 # Set labels for axes
-ax.set_xlabel("Height\n[mm]", fontsize=medium, labelpad=10, rotation='horizontal')
-ax.set_ylabel("Slice area\n[cm²]", fontsize=medium, labelpad=10)
+ax.set_xlabel("Height (mm)", fontsize=medium, labelpad=10, rotation='horizontal')
+ax.set_ylabel("Slice area (cm²)", fontsize=medium, labelpad=10)
 
 # Set label size
 ax.tick_params(labelsize=small, bottom=True)
@@ -89,5 +89,5 @@ ax.grid(b=True, axis='both')
 
 
 # Save figure
-plt.savefig('04.2_Slice_distribution_all_builds.jpeg', dpi=600, bbox_inches='tight')
-plt.savefig('04.2_Slice_distribution_all_builds.pdf', bbox_inches='tight')
+plt.savefig('04.3_Slice_distribution_all_builds.jpeg', dpi=600, bbox_inches='tight')
+plt.savefig('04.3_Slice_distribution_all_builds.pdf', bbox_inches='tight')
