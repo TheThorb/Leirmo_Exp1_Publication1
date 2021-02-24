@@ -189,11 +189,11 @@ for ax in axs:
     ax.set_ylabel("Density", fontsize=small)
     
     # Set label for the x-axis
-    ax.set_xlabel("Difference [mm]", fontsize=small)
+    ax.set_xlabel("Difference (mm)", fontsize=small)
     
     # Set labelsizes
     ax.tick_params(labelsize=x_small)
 
 # Save figure
-plt.savefig("31.1_Difference_between_repeated_measurements.jpeg", dpi=600, bbox_inches='tight')
-plt.savefig("31.1_Difference_between_repeated_measurements.pdf", bbox_inches='tight')
+plt.savefig("31.2_Difference_between_repeated_measurements.jpeg", dpi=600, bbox_inches='tight')
+plt.savefig("31.2_Difference_between_repeated_measurements.pdf", bbox_inches='tight')
