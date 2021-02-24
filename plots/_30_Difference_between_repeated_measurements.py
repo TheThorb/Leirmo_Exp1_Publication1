@@ -178,7 +178,7 @@ axs[1].set_yticklabels(["0.00", "0.01", "0.02", "0.03", "3\u03C3", "0.04", "0.05
 
 for ax in axs:
     # Set label for y-axis
-    ax.set_ylabel("Difference [mm]", fontsize=large)
+    ax.set_ylabel("Difference (mm)", fontsize=large)
     
     # Hide ticks on x-axis
     ax.tick_params(axis='x', length=0)
@@ -190,5 +190,5 @@ for ax in axs:
     ax.xaxis.grid(False)
 
 # Save figure
-plt.savefig("30.5_Difference_between_repeated_measurements.jpeg", dpi=600, bbox_inches='tight')
-plt.savefig("30.5_Difference_between_repeated_measurements.pdf", bbox_inches='tight')
+plt.savefig("30.6_Difference_between_repeated_measurements.jpeg", dpi=600, bbox_inches='tight')
+plt.savefig("30.6_Difference_between_repeated_measurements.pdf", bbox_inches='tight')
