@@ -1,24 +1,23 @@
 Number,Latest version,Name,Filetype,Description,Status
-00,,Boxplot_Cyl_error_z-pos_-90,pdf,Boxplot of cylindricity error versus z-position for validation group. All xy-positions included.,Archived
-01,,Boxplot_Cyl_error_z-pos_-90_y3,pdf,Boxplot of cylindricity error versus z-position for validation group. Only y=3 considered.,Archived
-02,,Boxplot_Diameter_z-pos_-90_y3,pdf,Boxplot of absolute diametrical error vs. z-position for validation group. Only y=3 considered.,Archived
-03,,Boxplot_Diameter_z-pos_-90_y1,pdf,Boxplot of absolute diametrical error vs. z-position for validation group. Only y=2 considered.,Archived
-04,1,Slice_distribution_all_builds,jpg,Lineplot with the slice distribution of all three builds in a single figure.,Coded separatly
-05,1,Initial_slice_distribution,jpg,Comparison of the slice distributions of perfect spheres and that of the main specimens of build 1.,Coded separatly
-10,,Boxplot_Cyl_error_between_builds_-90,pdf,Boxplot of cylindricity error of the validation group divided in builds.,Archived
-20,,Scatter_Cyl_error_convex,pdf,Scatter-plot of cylindricity error for convex cylinders by orientation.,Archived
-21,,Scatter_Cyl_error_concave,pdf,Scatter-plot of cylindricity error for concave cylinders by orientation.,Archived
-22,,Scatter_Flat_error_z-angle_ALL,pdf,Scatter-plot of flatness error for all planes by orientation in a single chart.,Archived
-23,,Scatter_Flat_error_z-angle_single_planes,pdf,Scatter-plot of flatness error for all planes by orientation in separate charts.,Archived
-24,,Scatter_Diameter_convex,pdf,Scatter-plot of the diametrical errors of convex cylinders by orientation.,Archived
-25,,Scatter_Diameter_concave,pdf,Scatter-plot of the diametrical errors of concave cylinders by orientation.,Archived
-30,4,Difference_between_repeated_measurements,jpg,Scatterplot illustrating the difference between repeated measurements.,Coded separatly
-31,0,Difference_between_repeated_measurements,jpg,Histograms and fitted distributions of the difference between repeated measurements.,Coded separatly
-40,0,Variation_between_builds_for_vertical_planes,jpg,Boxplot and kernel density estimation for variation between builds. Only vertical planes.,Coded separatly
-50,0,Difference between z-layers,jpg,Histograms and fitted distributions for the difference between the z-levels.,Active
-51,0,Variation_between_z-positions_for_vertical_planes,jpg,Boxplot and kernel density estimation for variation between z-levels. Only vertical planes.,Coded separatly
-52,0,Variation_between_positions_for_vertical_planes,jpg,Boxplots illustrating the variation between the different positions in the build space.,Coded separatly
-60,3,Diameter_anchor_positions,jpg,Boxplot illustrating difference in the measured error at anchor positions using diameter.,Coded separatly
+00,,Boxplot_Cyl_error_z-pos_-90,PDF,Boxplot of cylindricity error versus z-position for validation group. All xy-positions included.,Archived
+01,,Boxplot_Cyl_error_z-pos_-90_y3,PDF,Boxplot of cylindricity error versus z-position for validation group. Only y=3 considered.,Archived
+02,,Boxplot_Diameter_z-pos_-90_y3,PDF,Boxplot of absolute diametrical error vs. z-position for validation group. Only y=3 considered.,Archived
+03,,Boxplot_Diameter_z-pos_-90_y1,PDF,Boxplot of absolute diametrical error vs. z-position for validation group. Only y=2 considered.,Archived
+04,3,Slice_distribution_all_builds,JPEG/PDF,Lineplot with the slice distribution of all three builds in a single figure.,Coded separatly
+05,3,Initial_slice_distribution,JPEG/PDF,Comparison of the slice distributions of perfect spheres and that of the main specimens of build 1.,Coded separatly
+10,,Boxplot_Cyl_error_between_builds_-90,PDF,Boxplot of cylindricity error of the validation group divided in builds.,Archived
+20,,Scatter_Cyl_error_convex,PDF,Scatter-plot of cylindricity error for convex cylinders by orientation.,Archived
+21,,Scatter_Cyl_error_concave,PDF,Scatter-plot of cylindricity error for concave cylinders by orientation.,Archived
+22,,Scatter_Flat_error_z-angle_ALL,PDF,Scatter-plot of flatness error for all planes by orientation in a single chart.,Archived
+23,,Scatter_Flat_error_z-angle_single_planes,PDF,Scatter-plot of flatness error for all planes by orientation in separate charts.,Archived
+24,,Scatter_Diameter_convex,PDF,Scatter-plot of the diametrical errors of convex cylinders by orientation.,Archived
+25,,Scatter_Diameter_concave,PDF,Scatter-plot of the diametrical errors of concave cylinders by orientation.,Archived
+30,6,Difference_between_repeated_measurements,JPEG/PDF,Scatterplot illustrating the difference between repeated measurements.,Coded separatly
+31,2,Difference_between_repeated_measurements,JPEG/PDF,Histograms and fitted distributions of the difference between repeated measurements.,Coded separatly
+40,2,Variation_between_builds_for_vertical_planes,JPEG/PDF,Boxplot and kernel density estimation for variation between builds. Only vertical planes.,Coded separatly
+51,2,Variation_between_z-positions_for_vertical_planes,JPEG/PDF,Boxplot and kernel density estimation for variation between z-levels. Only vertical planes.,Coded separatly
+52,2,Variation_between_positions_for_vertical_planes,JPEG/PDF,Boxplots illustrating the variation between the different positions in the build space.,Coded separatly
+60,5,Diameter_anchor_positions,JPEG/PDF,Boxplot illustrating difference in the measured error at anchor positions using diameter.,Coded separatly
 ,,Cylindricity_overview,png,General overview of the cylindricity error.,Archived
 ,,Vertical_flatness_overview,png,General overview of the flatness error.,Archived
 ,,Vertical_xy_comparison,png,Boxplots and stripplots comparing the accuracy of vertical planes at different positions in the build chamber.,Archived
