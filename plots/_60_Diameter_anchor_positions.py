@@ -86,7 +86,7 @@ legend_elements = [Patch(facecolor=colors[0], label='Front-right', edgecolor='bl
 ax.legend(title='Position in the xy-plane', loc='upper right', title_fontsize=medium, fontsize=small, fancybox=True, markerscale=8, handles=legend_elements)
 
 # Set labels for axes
-ax.set_ylabel("Measured error [mm]", fontsize=medium)
+ax.set_ylabel("Measured error (mm)", fontsize=medium)
 ax.set_xlabel("Z-level", fontsize=medium)
 
 # Set label size
@@ -94,5 +94,5 @@ ax.tick_params(labelsize=small)
 
 
 # Save figure
-plt.savefig('60.4_Diameter_anchor_positions.jpeg', dpi=600, bbox_inches='tight')
-plt.savefig('60.4_Diameter_anchor_positions.pdf', bbox_inches='tight')
+plt.savefig('60.5_Diameter_anchor_positions.jpeg', dpi=600, bbox_inches='tight')
+plt.savefig('60.5_Diameter_anchor_positions.pdf', bbox_inches='tight')
