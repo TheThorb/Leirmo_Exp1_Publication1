@@ -80,7 +80,7 @@ axs[1].set_xlabel("Y-position", fontsize=medium)
 # Define parameters common to both panels
 for ax in axs:
     # Set label for y-axis
-    ax.set_ylabel("Measured error [mm]", fontsize=medium)
+    ax.set_ylabel("Measured error (mm)", fontsize=medium)
     
     # Set the label size for both axes
     ax.tick_params(labelsize=small)
@@ -90,5 +90,5 @@ for ax in axs:
 
 
 # Save figure
-plt.savefig("52.1_Variation_between_positions_for_vertical_planes.jpeg", dpi=600, bbox_inches='tight')
-plt.savefig("52.1_Variation_between_positions_for_vertical_planes.pdf", bbox_inches='tight')
+plt.savefig("52.2_Variation_between_positions_for_vertical_planes.jpeg", dpi=600, bbox_inches='tight')
+plt.savefig("52.2_Variation_between_positions_for_vertical_planes.pdf", bbox_inches='tight')
