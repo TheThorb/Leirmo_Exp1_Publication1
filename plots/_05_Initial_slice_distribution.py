@@ -63,10 +63,10 @@ for i in range(len(axs)):
     axs[i].plot(dfs[i], linewidth=2)
 
     # Set label for y-axis
-    axs[i].set_ylabel('Slice area [cm²]', fontsize=medium)
+    axs[i].set_ylabel('Slice area (cm²)', fontsize=medium)
     
     # Set label for x-axis
-    axs[i].set_xlabel('Height [mm]', fontsize=medium)
+    axs[i].set_xlabel('Height (mm)', fontsize=medium)
     
     # Set the label size for both axes
     axs[i].tick_params(labelsize=small, bottom=True)
@@ -83,5 +83,5 @@ for i in range(len(axs)):
     
     
 # Save figure
-plt.savefig('05.2_Initial_slice_distribution.jpeg', dpi=600, bbox_inches='tight')
-plt.savefig('05.2_Initial_slice_distribution.pdf', bbox_inches='tight')
+plt.savefig('05.3_Initial_slice_distribution.jpeg', dpi=600, bbox_inches='tight')
+plt.savefig('05.3_Initial_slice_distribution.pdf', bbox_inches='tight')
