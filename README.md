@@ -1,7 +1,6 @@
 # Leirmo_Exp1_Publication1
 This repository contains data, code, and figures for the first publication of results from the first experiment of Torbjørn Langedahl Leirmo.
-The repository is established in connection with a scientific publication where the results are disseminated.
-Links will be provided shortly after publication.
+The repository is established in connection with a scientific publication in the open access journal "applied sciences" where the results are disseminated. The article is available from https://doi.org/10.3390/app11052031. The data is also published through the open repository "DataverseNO" available from https://doi.org/10.18710/DHACHZ.
 Any inquiries may be directed to torbjorn.leirmo@ntnu.no.
 
 
